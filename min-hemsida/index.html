@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sparkalkylatorn™ — Ny omgång varje dag</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0D0D0D;
+  --card:#181818;
+  --card2:#1E1E1E;
+  --border:#2A2A2A;
+  --text:#F5F5F5;
+  --muted:#888;
+  --dim:#555;
+  --pink:#FF2D78;
+  --blue:#2979FF;
+  --lime:#C6FF00;
+  --orange:#FF6B00;
+  --purple:#A259FF;
+  --cyan:#00E5FF;
+  --green:#00E676;
+  --yellow:#FFD600;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+.wrap{max-width:720px;margin:0 auto;padding:0 20px 60px;position:relative}
+header{padding:40px 0 28px;text-align:center}
+.tag{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);border-radius:100px;padding:6px 16px;font-size:12px;font-weight:600;letter-spacing:.05em;color:var(--muted);margin-bottom:22px;text-transform:uppercase}
+.tag-dot{width:7px;height:7px;border-radius:50%;background:var(--lime);animation:blink 1.8s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+h1{font-size:clamp(2.4rem,8vw,4rem);font-weight:900;line-height:1.05;letter-spacing:-.03em;margin-bottom:12px}
+.grad{background:linear-gradient(90deg,var(--pink),var(--purple),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.lead{font-size:15px;color:var(--muted);max-width:440px;margin:0 auto;line-height:1.6;font-weight:400}
+.reload-bar{display:flex;align-items:center;justify-content:space-between;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px 20px;margin:28px 0 16px;gap:12px;flex-wrap:wrap}
+.reload-info{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--muted);font-weight:500}
+.dots{display:flex;gap:5px}
+.dot{width:11px;height:11px;border-radius:50%;background:var(--border);transition:background .3s}
+.dot.used{background:var(--pink)}
+.dot.avail{background:var(--lime)}
+.btn-reload{display:inline-flex;align-items:center;gap:8px;background:var(--lime);color:#000;border:none;border-radius:100px;padding:10px 22px;font-family:'Outfit',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:transform .15s,opacity .15s;white-space:nowrap}
+.btn-reload:hover{transform:scale(1.04)}
+.btn-reload:active{transform:scale(.97)}
+.btn-reload:disabled{opacity:.3;cursor:not-allowed;transform:none}
+.counter-wrap{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:32px 28px 24px;margin-bottom:12px;text-align:center;position:relative;overflow:hidden}
+.counter-wrap::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--pink),var(--purple),var(--cyan),var(--lime))}
+.clbl{font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.cnum{font-size:clamp(2.4rem,8vw,4.4rem);font-weight:900;letter-spacing:-.03em;color:var(--lime);line-height:1;margin-bottom:6px;transition:transform .15s}
+.cnum.pop{transform:scale(1.06)}
+.cnote{font-size:13px;color:var(--dim);font-weight:400}
+.pbar{margin-top:20px;padding-top:20px;border-top:1px solid var(--border);display:flex;align-items:center;gap:12px}
+.plbl{font-size:11px;font-weight:700;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;white-space:nowrap}
+.track{flex:1;height:6px;background:var(--border);border-radius:3px;overflow:hidden}
+.fill{height:100%;background:linear-gradient(90deg,var(--pink),var(--purple),var(--lime));border-radius:3px;transition:width .5s cubic-bezier(.34,1.56,.64,1);width:0%}
+.pval{font-size:12px;font-weight:700;color:var(--lime);min-width:44px;text-align:right}
+.cat{margin-bottom:24px}
+.cat-head{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.cpill{display:inline-block;padding:4px 14px;border-radius:100px;font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase}
+.cpill.pk{background:rgba(255,45,120,.15);color:var(--pink);border:1px solid rgba(255,45,120,.3)}
+.cpill.bl{background:rgba(41,121,255,.15);color:var(--blue);border:1px solid rgba(41,121,255,.3)}
+.cpill.lm{background:rgba(198,255,0,.12);color:var(--lime);border:1px solid rgba(198,255,0,.25)}
+.ccount{font-size:12px;color:var(--dim);font-weight:500}
+.item{display:flex;align-items:flex-start;gap:14px;padding:14px 16px;border:1px solid var(--border);border-radius:14px;cursor:pointer;margin-bottom:6px;transition:background .15s,border-color .15s,transform .1s;background:var(--card)}
+.item:hover{background:var(--card2);border-color:#3A3A3A;transform:translateX(2px)}
+.item.on{background:#0D2415;border-color:rgba(0,230,118,.3)}
+.item.on:hover{background:#102b1a}
+.checkbox{width:22px;height:22px;flex-shrink:0;border:2px solid var(--border);border-radius:6px;margin-top:1px;display:flex;align-items:center;justify-content:center;transition:all .2s;background:transparent}
+.item.on .checkbox{background:var(--green);border-color:var(--green)}
+.cksvg{display:none;width:12px;height:12px;stroke:#000;stroke-width:3;fill:none}
+.item.on .cksvg{display:block}
+.idesc{flex:1;font-size:14px;color:#ccc;line-height:1.5;font-weight:400}
+.item.on .idesc{color:var(--text)}
+.ikr{font-size:13px;font-weight:700;color:var(--dim);white-space:nowrap;padding-top:2px;transition:color .2s}
+.item.on .ikr{color:var(--green)}
+.ikr.big{color:var(--yellow)!important}
+.item.on .ikr.big{color:var(--yellow)!important}
+.sel-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;padding:0 2px;flex-wrap:wrap;gap:8px}
+.sel-txt{font-size:12px;color:var(--dim);font-weight:500}
+.btn-all{background:none;border:1px solid var(--border);color:var(--muted);font-family:'Outfit',sans-serif;font-size:12px;font-weight:600;padding:7px 16px;border-radius:100px;cursor:pointer;transition:all .15s}
+.btn-all:hover{border-color:var(--muted);color:var(--text)}
+.sep{height:1px;background:var(--border);margin:32px 0}
+.share-box{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:28px;margin:32px 0}
+.share-title{font-size:1.2rem;font-weight:800;margin-bottom:4px;letter-spacing:-.02em}
+.share-sub{font-size:13px;color:var(--muted);margin-bottom:18px}
+.share-prev{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:16px 18px;font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:18px;font-style:italic;min-height:72px}
+.sbtns{display:flex;gap:10px;flex-wrap:wrap}
+.sbtn{display:inline-flex;align-items:center;gap:8px;padding:11px 20px;border-radius:100px;border:none;font-family:'Outfit',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:transform .15s,opacity .15s;text-decoration:none}
+.sbtn:hover{transform:scale(1.04)}
+.sbtn-pk{background:var(--pink);color:#fff}
+.sbtn-out{background:none;border:1px solid var(--border);color:var(--muted)}
+.sbtn-out:hover{border-color:var(--muted);color:var(--text)}
+.sbtn-x{background:#fff;color:#000}
+.sbtn-pur{background:var(--purple);color:#fff}
+.sbtn-org{background:var(--orange);color:#fff}
+.cert-box{background:linear-gradient(135deg,rgba(162,89,255,.1),rgba(0,229,255,.05));border:1px solid rgba(162,89,255,.3);border-radius:20px;padding:28px;text-align:center;margin-bottom:16px}
+.donate-box{background:linear-gradient(135deg,rgba(255,107,0,.08),rgba(255,214,0,.05));border:1px solid rgba(255,107,0,.25);border-radius:20px;padding:28px;text-align:center;margin-bottom:40px}
+.bx-title{font-size:1.1rem;font-weight:800;margin-bottom:6px;letter-spacing:-.02em}
+.bx-desc{font-size:13px;color:var(--muted);margin-bottom:18px;line-height:1.6}
+.bx-note{display:block;font-size:11px;color:var(--dim);margin-top:10px}
+.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--lime);color:#000;padding:12px 24px;border-radius:100px;font-size:13px;font-weight:700;transition:transform .3s cubic-bezier(.34,1.56,.64,1);z-index:500;pointer-events:none}
+.toast.show{transform:translateX(-50%) translateY(0)}
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.87);backdrop-filter:blur(6px);z-index:200;align-items:center;justify-content:center;padding:20px}
+.modal-bg.open{display:flex}
+.modal{background:#181818;border:1px solid #2A2A2A;border-radius:24px;max-width:420px;width:100%;padding:36px 32px;text-align:center;animation:popIn .35s cubic-bezier(.34,1.56,.64,1)}
+@keyframes popIn{from{transform:scale(.85);opacity:0}to{transform:scale(1);opacity:1}}
+.modal-emoji{font-size:48px;margin-bottom:16px;display:block}
+.modal-title{font-size:1.5rem;font-weight:900;letter-spacing:-.03em;margin-bottom:8px}
+.modal-sub{font-size:14px;color:var(--muted);margin-bottom:24px;line-height:1.6}
+.price-tag{display:inline-block;background:linear-gradient(135deg,var(--pink),var(--purple));border-radius:14px;padding:16px 32px;margin-bottom:24px}
+.price-big{font-size:2.4rem;font-weight:900;letter-spacing:-.03em}
+.price-note{font-size:12px;opacity:.75;margin-top:2px}
+.feat{text-align:left;background:var(--bg);border-radius:12px;padding:14px 18px;margin-bottom:24px}
+.feat li{list-style:none;font-size:13px;color:#ccc;padding:5px 0;display:flex;gap:10px;align-items:center;font-weight:500}
+.feat li::before{content:'✦';color:var(--lime);font-size:10px}
+.btn-pay{display:block;width:100%;background:linear-gradient(90deg,var(--pink),var(--purple));border:none;border-radius:100px;padding:16px;font-family:'Outfit',sans-serif;font-size:16px;font-weight:800;color:#fff;cursor:pointer;margin-bottom:10px;transition:opacity .2s,transform .15s}
+.btn-pay:hover{opacity:.9;transform:scale(1.02)}
+.modal-close{background:none;border:none;color:var(--dim);font-family:'Outfit',sans-serif;font-size:13px;cursor:pointer;padding:4px;transition:color .15s}
+.modal-close:hover{color:var(--muted)}
+.cert-modal{background:#0D0D0D;border:1px solid rgba(162,89,255,.3);border-radius:24px;max-width:560px;width:100%;overflow:hidden;animation:popIn .35s cubic-bezier(.34,1.56,.64,1)}
+.cert-paper{padding:48px 40px 36px;text-align:center;border-bottom:1px solid #2A2A2A;position:relative}
+.cert-border{position:absolute;inset:12px;border:1px solid rgba(162,89,255,.2);border-radius:16px;pointer-events:none}
+.cert-org{font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--purple);font-weight:700;margin-bottom:28px;display:block}
+.cert-lbl{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);margin-bottom:12px;font-weight:600}
+.cert-name{font-size:2rem;font-weight:900;letter-spacing:-.03em;background:linear-gradient(90deg,var(--purple),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:20px}
+.cert-body{font-size:14px;color:var(--muted);line-height:1.8;margin-bottom:28px}
+.cert-body strong{color:var(--text);font-weight:700}
+.cert-seal{font-size:44px;margin-bottom:12px;display:block}
+.cert-line{width:100px;height:1px;background:rgba(162,89,255,.3);margin:0 auto 8px}
+.cert-sig{font-size:10px;letter-spacing:.15em;color:var(--dim);text-transform:uppercase;font-weight:600}
+.cert-foot{padding:16px 20px;display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end;background:#111}
+@media(max-width:500px){.cert-paper{padding:36px 24px 28px}.cert-name{font-size:1.5rem}}
+footer{text-align:center;padding-top:32px;border-top:1px solid var(--border);font-size:11px;color:var(--dim);font-weight:500;line-height:2}
+@media print{.cert-modal-bg{position:static;background:none;display:block;padding:0}.cert-foot,.modal-bg:not(#cert-modal),.wrap{display:none!important}.cert-modal{border:none;max-width:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+ 
+<header>
+  <div class="tag"><span class="tag-dot"></span>Slumpad ny lista varje gång</div>
+  <h1>Sparkalkylatorn<span class="grad">™</span></h1>
+  <p class="lead">Kryssa i allt du <em>inte</em> köpte idag. Ny slumpad lista varje omgång. Räkna hem dig till frihet.</p>
+</header>
+ 
+<!-- RELOAD BAR -->
+<div class="reload-bar">
+  <div class="reload-info">
+    <div class="dots" id="dots"></div>
+    <span id="reload-txt">3 omladdningar kvar idag</span>
+  </div>
+  <button class="btn-reload" id="btn-reload" onclick="doReload()">
+    <span id="spin-icon" style="display:inline-block;transition:transform .4s">🔀</span> Ny omgång
+  </button>
+</div>
+ 
+<!-- COUNTER -->
+<div class="counter-wrap">
+  <p class="clbl">Totala besparingar idag</p>
+  <div class="cnum" id="cnum">0 kr</div>
+  <p class="cnote" id="cnote">Börja kryssa i dina prestationer ↓</p>
+  <div class="pbar">
+    <span class="plbl">FIRE 🔥</span>
+    <div class="track"><div class="fill" id="fill"></div></div>
+    <span class="pval" id="pval">0%</span>
+  </div>
+</div>
+ 
+<!-- SELECT ALL ROW -->
+<div class="sel-row">
+  <span class="sel-txt" id="seltxt">0 av 13 genomförda</span>
+  <button class="btn-all" onclick="toggleAll()">Välj alla</button>
+</div>
+ 
+<!-- CATS -->
+<div class="cat">
+  <div class="cat-head">
+    <span class="cpill pk">☕ Vardagslyx</span>
+    <span class="ccount" id="cc-v"></span>
+  </div>
+  <div id="items-vardag"></div>
+</div>
+ 
+<div class="cat">
+  <div class="cat-head">
+    <span class="cpill bl">🚀 Orimliga köp</span>
+    <span class="ccount" id="cc-o"></span>
+  </div>
+  <div id="items-orimlig"></div>
+</div>
+ 
+<div class="cat">
+  <div class="cat-head">
+    <span class="cpill lm">🛋️ Social lättja</span>
+    <span class="ccount" id="cc-s"></span>
+  </div>
+  <div id="items-social"></div>
+</div>
+ 
+<div class="sep"></div>
+ 
+<!-- SHARE -->
+<div class="share-box">
+  <h2 class="share-title">📢 Dela din framgång</h2>
+  <p class="share-sub">Dina kollegor behöver veta detta omedelbart.</p>
+  <div class="share-prev" id="share-prev"><em>Kryssa i något för att generera din finansupdate…</em></div>
+  <div class="sbtns">
+    <button class="sbtn sbtn-pk" onclick="copyTxt()">📋 Kopiera</button>
+    <button class="sbtn sbtn-out" onclick="shareLI()">💼 LinkedIn</button>
+    <button class="sbtn sbtn-x" onclick="shareXt()">𝕏 X</button>
+  </div>
+</div>
+ 
+<!-- CERT -->
+<div class="cert-box">
+  <span style="font-size:36px;margin-bottom:12px;display:block">📜</span>
+  <h2 class="bx-title">Certifikat i Extrem Frugalitet</h2>
+  <p class="bx-desc">Ladda ner ett officiellt diplom som bevisar din disciplin. Gratis. Du sparar ju redan.</p>
+  <button class="sbtn sbtn-pur" onclick="openCert()">🏆 Generera diplom</button>
+  <span class="bx-note">Gratis · PDF via webbläsarens utskrift</span>
+</div>
+ 
+<!-- DONATE -->
+<div class="donate-box">
+  <h2 class="bx-title">Vill du sabba sparkalkylen? ☕</h2>
+  <p class="bx-desc">Klicka för att <em>inte</em> spara 29 kr utan ge dem till utvecklaren. Ironiskt köp — moraliskt okej.</p>
+  <a href="https://buymeacoffee.com" class="sbtn sbtn-org" target="_blank" rel="noopener">☕ Spara inte 29 kr</a>
+  <span class="bx-note">*Drar 29 kr från din sparkalkyl. Du blev varnad.</span>
+</div>
+ 
+<footer>
+  Sparkalkylatorn™ &nbsp;·&nbsp; Alla siffror juridiskt bindande* &nbsp;·&nbsp; *ej juridiskt bindande<br>
+  Inget ansvar tas för självbelåtenhet, LinkedIn-inflöde eller existentiell kris
+</footer>
+</div>
+ 
+<!-- TOAST -->
+<div class="toast" id="toast">✓ Klart!</div>
+ 
+<!-- PAYWALL MODAL -->
+<div class="modal-bg" id="pay-modal" onclick="if(event.target===this)closePay()">
+  <div class="modal">
+    <span class="modal-emoji">🔒</span>
+    <h2 class="modal-title">Slut på gratisomgångar</h2>
+    <p class="modal-sub">Du har använt dina 3 gratis omladdningar för idag. Vill du fortsätta slumpa nya val?</p>
+    <div class="price-tag">
+      <div class="price-big">$3</div>
+      <div class="price-note">Obegränsade omladdningar — för alltid</div>
+    </div>
+    <ul class="feat">
+      <li>Obegränsade omladdningar, för alltid</li>
+      <li>Nya absurda poster läggs till löpande</li>
+      <li>Stödjer en lat utvecklares sparkalkyl</li>
+      <li>Ironisk men faktisk investering</li>
+    </ul>
+    <button class="btn-pay" onclick="handlePay()">🚀 Lås upp — $3 engångspris</button>
+    <button class="modal-close" onclick="closePay()">Nej tack, 3 gratisomgångar räcker</button>
+  </div>
+</div>
+ 
+<!-- CERT MODAL -->
+<div class="modal-bg" id="cert-modal" onclick="if(event.target===this)closeCert()">
+  <div class="cert-modal">
+    <div class="cert-paper">
+      <div class="cert-border"></div>
+      <span class="cert-org">Sparkalkylatorn™ · Finansiell Akademi</span>
+      <p class="cert-lbl">Härmed intygas att</p>
+      <div class="cert-name" id="c-name">Din Latmaskes Fullständiga Namn</div>
+      <p class="cert-body" id="c-body">Genom synnerligen imponerande passivitet och en förbluffande förmåga att <em>inte</em> spendera pengar har uppnått titeln<br><br><strong>Certifierad Expert i Extrem Frugalitet (CEF)</strong><br><br>och bevisats besitta de finansiella instinkter som krävs för att lägga på soffan och kalla det en strategi.</p>
+      <span class="cert-seal">🥇</span>
+      <div class="cert-line"></div>
+      <span class="cert-sig">Generaldirektör, Sparkalkylatorn™ · Utfärdat: <span id="c-date"></span></span>
+    </div>
+    <div class="cert-foot">
+      <input id="c-input" type="text" placeholder="Ditt namn…" style="flex:1;min-width:140px;background:#1A1A1A;border:1px solid #2A2A2A;color:#F5F5F5;padding:10px 14px;border-radius:100px;font-family:'Outfit',sans-serif;font-size:14px;outline:none">
+      <button class="sbtn sbtn-pur" onclick="setCertName()">Uppdatera</button>
+      <button class="sbtn" style="background:#222;color:#ccc;border:none" onclick="window.print()">🖨️ PDF</button>
+      <button class="sbtn" style="background:#111;color:#555;border:1px solid #2A2A2A" onclick="closeCert()">Stäng</button>
+    </div>
+  </div>
+</div>
+ 
+<script>
+const POOLS={
+  vardag:[
+    {t:"Köpte inte matcha-latte med havremjölk på stan",kr:75},
+    {t:"Skippade surdegslimpa på hipsterbageriet",kr:85},
+    {t:"Åt inte avocadotoast med pocherat ägg",kr:145},
+    {t:"Beställde inte hem via Wolt kl 22:47",kr:189},
+    {t:"Köpte inte oat milk-kapslar för hemmabruk",kr:329},
+    {t:"Drack inte 4 oat flat whites på co-working-stället",kr:220},
+    {t:"Köpte inte ny yoga-legging 'för att börja träna'",kr:599},
+    {t:"Skippade nya hörlurar för 'att fokusera bättre'",kr:2499},
+    {t:"Köpte inte ny planner för det nya kvartalet",kr:349},
+    {t:"Beställde inte sushi trots att du sa att du skulle äta nyttigt",kr:385},
+    {t:"Köpte inte en ny hoodie för att den gamla 'börjar bli sliten'",kr:699},
+    {t:"Skippade cocktails på trendig takbar i stan",kr:450},
+    {t:"Köpte inte ännu ett par sneakers du inte behöver",kr:1299},
+    {t:"Prenumererade inte på ännu en streamingtjänst",kr:139},
+    {t:"Köpte inte 'raw organic cold pressed' juice × 3",kr:267},
+    {t:"Skippade brunch med 16% dricks och allergivänlig meny",kr:310},
+    {t:"Köpte inte aromalampa + stressreducerande doftpinnar",kr:239},
+    {t:"Gick inte till kaffebaren för tredje gången idag",kr:68},
+    {t:"Köpte inte 'bara ett litet tuggummi' i kassan (+ chips + tidning)",kr:94},
+    {t:"Avbeställde inte Klarna-köpet i sista sekund (klarade dig)",kr:549},
+  ],
+  orimlig:[
+    {t:"Avstod från att köpa en begagnad ubåt till semestern",kr:12000000},
+    {t:"Köpte inte herrgården på Strandvägen som låg ute på Hemnet",kr:65000000},
+    {t:"Lät bli att köpa Twitter/X av Elon Musk (klokt beslut)",kr:480000000000},
+    {t:"Investerade inte i en privat ö i Karibien för distansarbete",kr:850000000},
+    {t:"Hyrde inte ut hela Globen för din födelsedag",kr:2500000},
+    {t:"Köpte inte ett Formel 1-stall för nätverkandets skull",kr:4200000000},
+    {t:"Lät bli att köpa ett privat flygplan",kr:95000000},
+    {t:"Avstod från att köpa IFK Göteborg av sentimentala skäl",kr:180000000},
+    {t:"Köpte inte en lyxjakt i Monaco",kr:230000000},
+    {t:"Lät bli att finansiera en privat rymdresa",kr:4500000000},
+    {t:"Köpte inte ett slott i Loire-dalen 'för att det var billigt'",kr:38000000},
+    {t:"Avstod från att förvärva Abba-katalogen av nostalgi",kr:12000000000},
+    {t:"Köpte inte rätten att döpa om ett hav efter dig",kr:7500000000},
+  ],
+  social:[
+    {t:"Tackade nej till stela parmiddagen och åt nudlar hemma istället",kr:600},
+    {t:"Gick inte på gymmet (sparade skosulor + tvättmaskinstid)",kr:45},
+    {t:"Deltog inte i marathonloppet du anmälde dig till för 9 mån sedan",kr:500},
+    {t:"Miste inte plånboken på en barkväll och fick spärra alla kort",kr:800},
+    {t:"Droppade afterwork och drack kvarglömt lättöl hemma istället",kr:450},
+    {t:"Köpte inte spontan flygbiljett till Barcelona 'för att du förtjänar det'",kr:4200},
+    {t:"Gick inte på frisören trots att du borde",kr:1200},
+    {t:"Hoppade av spinning-klassen kl 06:30 utan ånger",kr:0},
+    {t:"Avbröt abonnemanget på yogastudion du aldrig använde",kr:399},
+    {t:"Tackade nej till fikamötet som lika gärna kunde ha varit ett mail",kr:85},
+    {t:"Gick inte på konsert du inte egentligen ville på för att vara social",kr:550},
+    {t:"Skippad teambuilding med go-cart och plastmugg med företagslogo",kr:0},
+    {t:"Tackade nej till 'spontan' weekend i Berlin med folk du knappt gillar",kr:3800},
+  ],
+};
+ 
+const FIRE_TARGET=480650000000;
+const MAX_FREE=3;
+let current={vardag:[],orimlig:[],social:[]};
+let checked={};
+let total=0,nChecked=0;
+ 
+function todayKey(){return'spark_'+new Date().toISOString().slice(0,10)}
+function getReloads(){return parseInt(localStorage.getItem(todayKey())||'0')}
+function incReloads(){localStorage.setItem(todayKey(),getReloads()+1)}
+function isUnlimited(){return localStorage.getItem('spark_unlimited')==='1'}
+function setUnlimited(){localStorage.setItem('spark_unlimited','1')}
+ 
+function shuffle(a){const r=[...a];for(let i=r.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[r[i],r[j]]=[r[j],r[i]]}return r}
+function pick(pool,n){return shuffle(pool).slice(0,n)}
+ 
+function fmt(n){return n.toLocaleString('sv-SE')+' kr'}
+ 
+function genItems(){
+  current={
+    vardag:pick(POOLS.vardag,5),
+    orimlig:pick(POOLS.orimlig,4),
+    social:pick(POOLS.social,4),
+  };
+}
+ 
+function renderAll(){
+  total=0;nChecked=0;checked={};
+  const cats={vardag:'items-vardag',orimlig:'items-orimlig',social:'items-social'};
+  const counts={vardag:'cc-v',orimlig:'cc-o',social:'cc-s'};
+  Object.entries(cats).forEach(([cat,elId])=>{
+    const el=document.getElementById(elId);
+    el.innerHTML='';
+    current[cat].forEach((item,i)=>{
+      const k=cat+'_'+i;
+      checked[k]=false;
+      const big=item.kr>=1000000000;
+      const d=document.createElement('div');
+      d.className='item';d.dataset.key=k;d.dataset.kr=item.kr;
+      d.innerHTML=`<div class="checkbox"><svg class="cksvg" viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div><span class="idesc">${item.t}</span><span class="ikr${big?' big':''}">${item.kr===0?'🆓 Gratis seger':'+'+fmt(item.kr)}</span>`;
+      d.addEventListener('click',()=>toggle(d,k));
+      el.appendChild(d);
+    });
+    document.getElementById(counts[cat]).textContent=current[cat].length+' poster';
+  });
+  updateDisplay();
+}
+ 
+function toggle(div,k){
+  const kr=parseInt(div.dataset.kr)||0;
+  checked[k]=!checked[k];
+  if(checked[k]){div.classList.add('on');total+=kr;nChecked++}
+  else{div.classList.remove('on');total-=kr;nChecked--}
+  updateDisplay();
+}
+ 
+function toggleAll(){
+  const anyOff=Object.values(checked).some(v=>!v);
+  total=0;nChecked=0;
+  document.querySelectorAll('.item').forEach(div=>{
+    const k=div.dataset.key;const kr=parseInt(div.dataset.kr)||0;
+    if(anyOff){checked[k]=true;div.classList.add('on');total+=kr;nChecked++}
+    else{checked[k]=false;div.classList.remove('on')}
+  });
+  updateDisplay();
+}
+ 
+function updateDisplay(){
+  const el=document.getElementById('cnum');
+  el.textContent=fmt(total);el.classList.add('pop');setTimeout(()=>el.classList.remove('pop'),200);
+  const notes=[[0,'Börja kryssa i dina prestationer ↓'],[1000,'Bra start. Räcker till en surdegslimpa.'],[100000,'Warren Buffett är lite avundsjuk.'],[1000000,'Du är tekniskt sett miljonär. På pappret.'],[1000000000,'Din privatekonom förstår ingenting.'],[Infinity,'🏆 Rikare än de flesta länder. Teoretiskt.']];
+  const note=notes.filter(([n])=>total>=n).pop();
+  document.getElementById('cnote').textContent=note[1];
+  const pct=Math.min(100,(total/FIRE_TARGET)*100);
+  document.getElementById('fill').style.width=pct+'%';
+  const pv=document.getElementById('pval');pv.textContent=pct<0.001?'<0.001%':pct<1?pct.toFixed(3)+'%':pct.toFixed(1)+'%';
+  const tot=Object.keys(checked).length;
+  document.getElementById('seltxt').textContent=nChecked+' av '+tot+' genomförda';
+  updateShare();
+}
+ 
+function getShareText(){
+  const t=fmt(total);
+  if(!total)return'';
+  if(total<10000)return`Ekonomisk update: Sparat ${t} idag via strategisk passivitet 📊\n\nFölj för fler spartips.\n\n#Ekonomi #FIRE #Frugalitet`;
+  if(total<1000000)return`PORTFÖLJUPDATE 📊\n\nTotala besparingar idag: ${t}\n\nStrategi: Låg på soffan. Åt ostbågar. ROI: oändlig.\n\n#Ekonomi #FIRE #Sparkalkylatorn`;
+  return`Ekonomisk update 🚨\n\nJag har precis sparat ${t} idag genom att bara ligga på soffan och äta ostbågar.\n\nEfter noggrann analys valde jag att INTE köpa ubåt, herrgård på Strandvägen eller Twitter.\n\nDM öppna för coaching.\n\n#Ekonomi #Investering #Latmask #FIRE`;
+}
+function updateShare(){
+  const p=document.getElementById('share-prev');const txt=getShareText();
+  if(!txt){p.innerHTML='<em>Kryssa i något för att generera din finansupdate…</em>';return}
+  p.innerHTML=txt.replace(/\n/g,'<br>');
+}
+function copyTxt(){if(!total){showToast('Kryssa i något först!');return}navigator.clipboard.writeText(getShareText()).then(()=>showToast('✓ Kopierat!'))}
+function shareLI(){if(!total){showToast('Kryssa i något först!');return}window.open('https://www.linkedin.com/sharing/share-offsite/?url=sparkalkylatorn.se','_blank')}
+function shareXt(){if(!total){showToast('Kryssa i något först!');return}const t=encodeURIComponent(getShareText().substring(0,260));window.open('https://x.com/intent/tweet?text='+t,'_blank')}
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500)}
+ 
+function updateReloadUI(){
+  const unlimited=isUnlimited();
+  const used=unlimited?0:getReloads();
+  const rem=MAX_FREE-used;
+  const dotsEl=document.getElementById('dots');
+  const txt=document.getElementById('reload-txt');
+  const btn=document.getElementById('btn-reload');
+  if(unlimited){
+    dotsEl.innerHTML='<span style="font-size:18px;line-height:1">♾️</span>';
+    txt.textContent='Obegränsade omladdningar';
+    btn.disabled=false;
+  } else {
+    dotsEl.innerHTML='';
+    for(let i=0;i<MAX_FREE;i++){const d=document.createElement('div');d.className='dot '+(i<used?'used':'avail');dotsEl.appendChild(d)}
+    txt.textContent=rem<=0?'Slut på gratisomgångar för idag':rem+' omladdning'+(rem===1?'':'ar')+' kvar idag';
+    btn.disabled=rem<=0;
+  }
+}
+ 
+function doReload(){
+  if(!isUnlimited()&&getReloads()>=MAX_FREE){document.getElementById('pay-modal').classList.add('open');return}
+  const sp=document.getElementById('spin-icon');
+  sp.style.transform='rotate(360deg)';
+  setTimeout(()=>{sp.style.transition='none';sp.style.transform='rotate(0)';setTimeout(()=>{sp.style.transition='transform .4s'},50)},420);
+  if(!isUnlimited())incReloads();
+  genItems();renderAll();updateReloadUI();
+  window.scrollTo({top:0,behavior:'smooth'});
+  showToast('🔀 Ny omgång!');
+}
+ 
+function closePay(){document.getElementById('pay-modal').classList.remove('open')}
+function handlePay(){
+  // 👇 Replace with your actual Stripe Payment Link
+  window.open('https://buy.stripe.com/REPLACE_WITH_YOUR_STRIPE_LINK','_blank');
+  // After payment verified via webhook, call setUnlimited() and updateReloadUI()
+}
+ 
+function openCert(){
+  document.getElementById('c-date').textContent=new Date().toLocaleDateString('sv-SE');
+  if(total>0)document.getElementById('c-body').innerHTML=`Genom synnerligen imponerande passivitet och en förbluffande förmåga att <em>inte</em> spendera pengar har sparat totalt <strong>${fmt(total)}</strong> under en och samma dag.<br><br><strong>Certifierad Expert i Extrem Frugalitet (CEF)</strong>`;
+  document.getElementById('cert-modal').classList.add('open');
+}
+function closeCert(){document.getElementById('cert-modal').classList.remove('open')}
+function setCertName(){const v=document.getElementById('c-input').value.trim();if(v)document.getElementById('c-name').textContent=v}
+ 
+genItems();renderAll();updateReloadUI();
+</script>
+</body>
+</html>
