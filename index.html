@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="sv">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sparkalkylatorn™ — Ny omgång varje dag</title>
+<title>The Lazy Millionaire™ — New round every day</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
@@ -115,7 +115,7 @@ h1{font-size:clamp(2.4rem,8vw,4rem);font-weight:900;line-height:1.05;letter-spac
 .feat{text-align:left;background:var(--bg);border-radius:12px;padding:14px 18px;margin-bottom:24px}
 .feat li{list-style:none;font-size:13px;color:#ccc;padding:5px 0;display:flex;gap:10px;align-items:center;font-weight:500}
 .feat li::before{content:'✦';color:var(--lime);font-size:10px}
-.btn-pay{display:block;width:100%;background:linear-gradient(90deg,var(--pink),var(--purple));border:none;border-radius:100px;padding:16px;font-family:'Outfit',sans-serif;font-size:16px;font-weight:800;color:#fff;cursor:pointer;margin-bottom:10px;transition:opacity .2s,transform .15s}
+.btn-pay{display:block;width:100%;background:linear-gradient(90deg,var(--pink),var(--purple));border:none;border-radius:100px;padding:16px;font-family:'Outfit',sans-serif;font-size:16px;font-weight:800;color:#fff;cursor:pointer;margin-bottom:10px;transition:opacity .2s,transform .15s;text-decoration:none;text-align:center}
 .btn-pay:hover{opacity:.9;transform:scale(1.02)}
 .modal-close{background:none;border:none;color:var(--dim);font-family:'Outfit',sans-serif;font-size:13px;cursor:pointer;padding:4px;transition:color .15s}
 .modal-close:hover{color:var(--muted)}
@@ -140,27 +140,25 @@ footer{text-align:center;padding-top:32px;border-top:1px solid var(--border);fon
 <div class="wrap">
  
 <header>
-  <div class="tag"><span class="tag-dot"></span>Slumpad ny lista varje gång</div>
-  <h1>Sparkalkylatorn<span class="grad">™</span></h1>
-  <p class="lead">Kryssa i allt du <em>inte</em> köpte idag. Ny slumpad lista varje omgång. Räkna hem dig till frihet.</p>
+  <div class="tag"><span class="tag-dot"></span>Randomized list every round</div>
+  <h1>The Lazy Millionaire<span class="grad">™</span></h1>
+  <p class="lead">Check everything you <em>didn't</em> buy today. New randomized options every round. Math your way to freedom.</p>
 </header>
  
-<!-- RELOAD BAR -->
 <div class="reload-bar">
   <div class="reload-info">
     <div class="dots" id="dots"></div>
-    <span id="reload-txt">3 omladdningar kvar idag</span>
+    <span id="reload-txt">3 reloads left today</span>
   </div>
   <button class="btn-reload" id="btn-reload" onclick="doReload()">
-    <span id="spin-icon" style="display:inline-block;transition:transform .4s">🔀</span> Ny omgång
+    <span id="spin-icon" style="display:inline-block;transition:transform .4s">🔀</span> New Round
   </button>
 </div>
  
-<!-- COUNTER -->
 <div class="counter-wrap">
-  <p class="clbl">Totala besparingar idag</p>
-  <div class="cnum" id="cnum">0 kr</div>
-  <p class="cnote" id="cnote">Börja kryssa i dina prestationer ↓</p>
+  <p class="clbl">Total Savings Today</p>
+  <div class="cnum" id="cnum">$0</div>
+  <p class="cnote" id="cnote">Start checking your achievements below ↓</p>
   <div class="pbar">
     <span class="plbl">FIRE 🔥</span>
     <div class="track"><div class="fill" id="fill"></div></div>
@@ -168,16 +166,14 @@ footer{text-align:center;padding-top:32px;border-top:1px solid var(--border);fon
   </div>
 </div>
  
-<!-- SELECT ALL ROW -->
 <div class="sel-row">
-  <span class="sel-txt" id="seltxt">0 av 13 genomförda</span>
-  <button class="btn-all" onclick="toggleAll()">Välj alla</button>
+  <span class="sel-txt" id="seltxt">0 of 13 completed</span>
+  <button class="btn-all" onclick="toggleAll()">Select All</button>
 </div>
  
-<!-- CATS -->
 <div class="cat">
   <div class="cat-head">
-    <span class="cpill pk">☕ Vardagslyx</span>
+    <span class="cpill pk">☕ Daily Luxuries</span>
     <span class="ccount" id="cc-v"></span>
   </div>
   <div id="items-vardag"></div>
@@ -185,7 +181,7 @@ footer{text-align:center;padding-top:32px;border-top:1px solid var(--border);fon
  
 <div class="cat">
   <div class="cat-head">
-    <span class="cpill bl">🚀 Orimliga köp</span>
+    <span class="cpill bl">🚀 Absurd Purchases</span>
     <span class="ccount" id="cc-o"></span>
   </div>
   <div id="items-orimlig"></div>
@@ -193,7 +189,7 @@ footer{text-align:center;padding-top:32px;border-top:1px solid var(--border);fon
  
 <div class="cat">
   <div class="cat-head">
-    <span class="cpill lm">🛋️ Social lättja</span>
+    <span class="cpill lm">🛋️ Social Laziness</span>
     <span class="ccount" id="cc-s"></span>
   </div>
   <div id="items-social"></div>
@@ -201,83 +197,77 @@ footer{text-align:center;padding-top:32px;border-top:1px solid var(--border);fon
  
 <div class="sep"></div>
  
-<!-- SHARE -->
 <div class="share-box">
-  <h2 class="share-title">📢 Dela din framgång</h2>
-  <p class="share-sub">Dina kollegor behöver veta detta omedelbart.</p>
-  <div class="share-prev" id="share-prev"><em>Kryssa i något för att generera din finansupdate…</em></div>
+  <h2 class="share-title">📢 Share Your Success</h2>
+  <p class="share-sub">Your coworkers need to know about this immediately.</p>
+  <div class="share-prev" id="share-prev"><em>Check an item to generate your financial update…</em></div>
   <div class="sbtns">
-    <button class="sbtn sbtn-pk" onclick="copyTxt()">📋 Kopiera</button>
+    <button class="sbtn sbtn-pk" onclick="copyTxt()">📋 Copy Text</button>
     <button class="sbtn sbtn-out" onclick="shareLI()">💼 LinkedIn</button>
     <button class="sbtn sbtn-x" onclick="shareXt()">𝕏 X</button>
   </div>
 </div>
  
-<!-- CERT -->
 <div class="cert-box">
   <span style="font-size:36px;margin-bottom:12px;display:block">📜</span>
-  <h2 class="bx-title">Certifikat i Extrem Frugalitet</h2>
-  <p class="bx-desc">Ladda ner ett officiellt diplom som bevisar din disciplin. Gratis. Du sparar ju redan.</p>
-  <button class="sbtn sbtn-pur" onclick="openCert()">🏆 Generera diplom</button>
-  <span class="bx-note">Gratis · PDF via webbläsarens utskrift</span>
+  <h2 class="bx-title">Certificate in Extreme Frugality</h2>
+  <p class="bx-desc">Download an official diploma proving your high-tier discipline. Free. You're already saving anyway.</p>
+  <button class="sbtn sbtn-pur" onclick="openCert()">🏆 Generate Diploma</button>
+  <span class="bx-note">Free · PDF via your browser's print tool</span>
 </div>
  
-<!-- DONATE -->
 <div class="donate-box">
-  <h2 class="bx-title">Vill du sabba sparkalkylen? ☕</h2>
-  <p class="bx-desc">Klicka för att <em>inte</em> spara 29 kr utan ge dem till utvecklaren. Ironiskt köp — moraliskt okej.</p>
-  <a href="https://buymeacoffee.com" class="sbtn sbtn-org" target="_blank" rel="noopener">☕ Spara inte 29 kr</a>
-  <span class="bx-note">*Drar 29 kr från din sparkalkyl. Du blev varnad.</span>
+  <h2 class="bx-title">Unlock Unlimited Potential 🚀</h2>
+  <p class="bx-desc">Don't save $3 today — spend them once to unlock unlimited daily rounds forever. An ironic yet smart investment.</p>
+  <a href="https://buymeacoffee.com" class="sbtn sbtn-org" target="_blank" rel="noopener" onclick="handlePayClick()">☕ Don't save $3 — Get Unlimited</a>
+  <span class="bx-note">*Costs exactly $3. One-time fee for life.</span>
 </div>
  
 <footer>
-  Sparkalkylatorn™ &nbsp;·&nbsp; Alla siffror juridiskt bindande* &nbsp;·&nbsp; *ej juridiskt bindande<br>
-  Inget ansvar tas för självbelåtenhet, LinkedIn-inflöde eller existentiell kris
+  The Lazy Millionaire™ &nbsp;·&nbsp; All numbers are legally binding* &nbsp;·&nbsp; *not legally binding<br>
+  No responsibility taken for smugness, LinkedIn main character syndrome, or existential dread.
 </footer>
 </div>
  
-<!-- TOAST -->
-<div class="toast" id="toast">✓ Klart!</div>
+<div class="toast" id="toast">✓ Success!</div>
  
-<!-- PAYWALL MODAL -->
 <div class="modal-bg" id="pay-modal" onclick="if(event.target===this)closePay()">
   <div class="modal">
     <span class="modal-emoji">🔒</span>
-    <h2 class="modal-title">Slut på gratisomgångar</h2>
-    <p class="modal-sub">Du har använt dina 3 gratis omladdningar för idag. Vill du fortsätta slumpa nya val?</p>
+    <h2 class="modal-title">Out of Free Rounds</h2>
+    <p class="modal-sub">You've reached your 3 daily free reloads. Ready to go pro for a tiny one-time fee?</p>
     <div class="price-tag">
       <div class="price-big">$3</div>
-      <div class="price-note">Obegränsade omladdningar — för alltid</div>
+      <div class="price-note">Unlimited Rounds — Forever</div>
     </div>
     <ul class="feat">
-      <li>Obegränsade omladdningar, för alltid</li>
-      <li>Nya absurda poster läggs till löpande</li>
-      <li>Stödjer en lat utvecklares sparkalkyl</li>
-      <li>Ironisk men faktisk investering</li>
+      <li>Unlimited reloads, forever</li>
+      <li>New ridiculous options added constantly</li>
+      <li>Supports a lazy developer's retirement fund</li>
+      <li>Exactly $3 — No more, no less</li>
     </ul>
-    <button class="btn-pay" onclick="handlePay()">🚀 Lås upp — $3 engångspris</button>
-    <button class="modal-close" onclick="closePay()">Nej tack, 3 gratisomgångar räcker</button>
+    <a href="https://buymeacoffee.com" class="btn-pay" target="_blank" rel="noopener" onclick="handlePayClick()">🚀 Get Unlimited — $3 Flat Fee</a>
+    <button class="modal-close" onclick="closePay()">No thanks, I'll wait until tomorrow</button>
   </div>
 </div>
  
-<!-- CERT MODAL -->
 <div class="modal-bg" id="cert-modal" onclick="if(event.target===this)closeCert()">
   <div class="cert-modal">
     <div class="cert-paper">
       <div class="cert-border"></div>
-      <span class="cert-org">Sparkalkylatorn™ · Finansiell Akademi</span>
-      <p class="cert-lbl">Härmed intygas att</p>
-      <div class="cert-name" id="c-name">Din Latmaskes Fullständiga Namn</div>
-      <p class="cert-body" id="c-body">Genom synnerligen imponerande passivitet och en förbluffande förmåga att <em>inte</em> spendera pengar har uppnått titeln<br><br><strong>Certifierad Expert i Extrem Frugalitet (CEF)</strong><br><br>och bevisats besitta de finansiella instinkter som krävs för att lägga på soffan och kalla det en strategi.</p>
+      <span class="cert-org">The Lazy Millionaire™ · Financial Academy</span>
+      <p class="cert-lbl">This is to certify that</p>
+      <div class="cert-name" id="c-name">Your Lazy Full Name</div>
+      <p class="cert-body" id="c-body">Through highly impressive passivity and an astonishing ability to <em>not</em> spend money, has achieved the title of<br><br><strong>Certified Expert in Extreme Frugality (CEF)</strong><br><br>and is proven to possess the financial instincts required to lie on the couch and call it a strategy.</p>
       <span class="cert-seal">🥇</span>
       <div class="cert-line"></div>
-      <span class="cert-sig">Generaldirektör, Sparkalkylatorn™ · Utfärdat: <span id="c-date"></span></span>
+      <span class="cert-sig">Director General, The Lazy Millionaire™ · Issued: <span id="c-date"></span></span>
     </div>
     <div class="cert-foot">
-      <input id="c-input" type="text" placeholder="Ditt namn…" style="flex:1;min-width:140px;background:#1A1A1A;border:1px solid #2A2A2A;color:#F5F5F5;padding:10px 14px;border-radius:100px;font-family:'Outfit',sans-serif;font-size:14px;outline:none">
-      <button class="sbtn sbtn-pur" onclick="setCertName()">Uppdatera</button>
+      <input id="c-input" type="text" placeholder="Your name…" style="flex:1;min-width:140px;background:#1A1A1A;border:1px solid #2A2A2A;color:#F5F5F5;padding:10px 14px;border-radius:100px;font-family:'Outfit',sans-serif;font-size:14px;outline:none">
+      <button class="sbtn sbtn-purple" style="background:var(--purple);color:#fff" onclick="setCertName()">Update</button>
       <button class="sbtn" style="background:#222;color:#ccc;border:none" onclick="window.print()">🖨️ PDF</button>
-      <button class="sbtn" style="background:#111;color:#555;border:1px solid #2A2A2A" onclick="closeCert()">Stäng</button>
+      <button class="sbtn" style="background:#111;color:#555;border:1px solid #2A2A2A" onclick="closeCert()">Close</button>
     </div>
   </div>
 </div>
@@ -285,60 +275,59 @@ footer{text-align:center;padding-top:32px;border-top:1px solid var(--border);fon
 <script>
 const POOLS={
   vardag:[
-    {t:"Köpte inte matcha-latte med havremjölk på stan",kr:75},
-    {t:"Skippade surdegslimpa på hipsterbageriet",kr:85},
-    {t:"Åt inte avocadotoast med pocherat ägg",kr:145},
-    {t:"Beställde inte hem via Wolt kl 22:47",kr:189},
-    {t:"Köpte inte oat milk-kapslar för hemmabruk",kr:329},
-    {t:"Drack inte 4 oat flat whites på co-working-stället",kr:220},
-    {t:"Köpte inte ny yoga-legging 'för att börja träna'",kr:599},
-    {t:"Skippade nya hörlurar för 'att fokusera bättre'",kr:2499},
-    {t:"Köpte inte ny planner för det nya kvartalet",kr:349},
-    {t:"Beställde inte sushi trots att du sa att du skulle äta nyttigt",kr:385},
-    {t:"Köpte inte en ny hoodie för att den gamla 'börjar bli sliten'",kr:699},
-    {t:"Skippade cocktails på trendig takbar i stan",kr:450},
-    {t:"Köpte inte ännu ett par sneakers du inte behöver",kr:1299},
-    {t:"Prenumererade inte på ännu en streamingtjänst",kr:139},
-    {t:"Köpte inte 'raw organic cold pressed' juice × 3",kr:267},
-    {t:"Skippade brunch med 16% dricks och allergivänlig meny",kr:310},
-    {t:"Köpte inte aromalampa + stressreducerande doftpinnar",kr:239},
-    {t:"Gick inte till kaffebaren för tredje gången idag",kr:68},
-    {t:"Köpte inte 'bara ett litet tuggummi' i kassan (+ chips + tidning)",kr:94},
-    {t:"Avbeställde inte Klarna-köpet i sista sekund (klarade dig)",kr:549},
+    {t:"Didn't buy an iced matcha latte with oat milk downtown",kr:7},
+    {t:"Skipped the sourdough loaf at the hipster bakery",kr:8},
+    {t:"Avoided buying avocado toast with a poached egg",kr:14},
+    {t:"Ordered absolutely nothing on food delivery apps at 11 PM",kr:22},
+    {t:"Resisted buying artisanal single-origin coffee pods",kr:35},
+    {t:"Didn't drink 4 flat whites at the co-working space today",kr:24},
+    {t:"Skipped buying high-end yoga leggings 'to start working out'",kr:65},
+    {t:"Didn't buy noise-canceling headphones 'to focus better'",kr:250},
+    {t:"Avoided buying a premium leather planner for the new quarter",kr:38},
+    {t:"Skipped ordering emergency sushi despite promises to eat clean",kr:42},
+    {t:"Didn't buy a brand new designer hoodie because the old one is 'fading'",kr:75},
+    {t:"Passed on overpriced cocktails at a trendy rooftop bar",kr:55},
+    {t:"Resisted buying another pair of sneakers you absolutely don't need",kr:130},
+    {t:"Successfully avoided subscribing to yet another streaming service",kr:15},
+    {t:"Didn't purchase 3 bottles of 'raw organic cold-pressed' juice",kr:28},
+    {t:"Skipped a group brunch featuring a mandatory 18% gratuity fee",kr:35},
+    {t:"Avoided buying an aromatherapy diffuser + stress-relief oils",kr:25},
+    {t:"Didn't visit the local cafe for the third time today",kr:8},
+    {t:"Resisted buying 'just a pack of gum' that somehow turned into $20",kr:20},
+    {t:"Cancelled an online shopping cart at checkout last minute",kr:60}
   ],
   orimlig:[
-    {t:"Avstod från att köpa en begagnad ubåt till semestern",kr:12000000},
-    {t:"Köpte inte herrgården på Strandvägen som låg ute på Hemnet",kr:65000000},
-    {t:"Lät bli att köpa Twitter/X av Elon Musk (klokt beslut)",kr:480000000000},
-    {t:"Investerade inte i en privat ö i Karibien för distansarbete",kr:850000000},
-    {t:"Hyrde inte ut hela Globen för din födelsedag",kr:2500000},
-    {t:"Köpte inte ett Formel 1-stall för nätverkandets skull",kr:4200000000},
-    {t:"Lät bli att köpa ett privat flygplan",kr:95000000},
-    {t:"Avstod från att köpa IFK Göteborg av sentimentala skäl",kr:180000000},
-    {t:"Köpte inte en lyxjakt i Monaco",kr:230000000},
-    {t:"Lät bli att finansiera en privat rymdresa",kr:4500000000},
-    {t:"Köpte inte ett slott i Loire-dalen 'för att det var billigt'",kr:38000000},
-    {t:"Avstod från att förvärva Abba-katalogen av nostalgi",kr:12000000000},
-    {t:"Köpte inte rätten att döpa om ett hav efter dig",kr:7500000000},
+    {t:"Abstained from purchasing a vintage military submarine for summer",kr:12000000},
+    {t:"Didn't buy that mega-mansion currently trending on Zillow",kr:65000000},
+    {t:"Decided NOT to acquire Twitter/X from Elon Musk (wise choice)",kr:44000000000},
+    {t:"Passed on buying a private island in the Bahamas for remote work",kr:850000000},
+    {t:"Rented out absolutely zero professional sports stadiums for your birthday",kr:2500000},
+    {t:"Decided against purchasing a Formula 1 racing team for networking",kr:4200000000},
+    {t:"Did not purchase a custom commercial private jet today",kr:95000000},
+    {t:"Abstained from buying a historic European castle 'just because'",kr:38000000},
+    {t:"Passed on acquiring a 300-foot luxury superyacht in Monaco",kr:230000000},
+    {t:"Decided to entirely skip funding a personal aerospace program",kr:4500000000},
+    {t:"Avoided purchasing the entire back-catalogue of a legendary pop band",kr:12000000000},
+    {t:"Bought zero naming rights to major oceans on planet Earth",kr:7500000000}
   ],
   social:[
-    {t:"Tackade nej till stela parmiddagen och åt nudlar hemma istället",kr:600},
-    {t:"Gick inte på gymmet (sparade skosulor + tvättmaskinstid)",kr:45},
-    {t:"Deltog inte i marathonloppet du anmälde dig till för 9 mån sedan",kr:500},
-    {t:"Miste inte plånboken på en barkväll och fick spärra alla kort",kr:800},
-    {t:"Droppade afterwork och drack kvarglömt lättöl hemma istället",kr:450},
-    {t:"Köpte inte spontan flygbiljett till Barcelona 'för att du förtjänar det'",kr:4200},
-    {t:"Gick inte på frisören trots att du borde",kr:1200},
-    {t:"Hoppade av spinning-klassen kl 06:30 utan ånger",kr:0},
-    {t:"Avbröt abonnemanget på yogastudion du aldrig använde",kr:399},
-    {t:"Tackade nej till fikamötet som lika gärna kunde ha varit ett mail",kr:85},
-    {t:"Gick inte på konsert du inte egentligen ville på för att vara social",kr:550},
-    {t:"Skippad teambuilding med go-cart och plastmugg med företagslogo",kr:0},
-    {t:"Tackade nej till 'spontan' weekend i Berlin med folk du knappt gillar",kr:3800},
-  ],
+    {t:"Declined an incredibly awkward double date; ate instant ramen instead",kr:65},
+    {t:"Skipped going to the gym (saved shoe leather + laundry cycles)",kr:5},
+    {t:"Did not run that marathon you signed up for 9 months ago",kr:50},
+    {t:"Avoided losing your wallet at a bar and paying card replacement fees",kr:80},
+    {t:"Skipped the corporate happy hour to drink a leftover soda at home",kr:45},
+    {t:"Didn't buy a spontaneous flight ticket to Barcelona because 'you deserve it'",kr:450},
+    {t:"Skipped a professional haircut appointment even though you need it",kr:120},
+    {t:"Ghosted a 6:30 AM spin class with zero remorse or regret",kr:20},
+    {t:"Cancelled the premium yoga studio pass you never actually used",kr:40},
+    {t:"Declined a coffee meeting that could have easily been an email",kr:10},
+    {t:"Skipped a concert you didn't care about just to appear social",kr:60},
+    {t:"Avoided corporate teambuilding involving go-karts and cheap swag",kr:15},
+    {t:"Declined a 'spontaneous' weekend getaway with people you barely like",kr:400}
+  ]
 };
  
-const FIRE_TARGET=480650000000;
+const FIRE_TARGET=44000000000;
 const MAX_FREE=3;
 let current={vardag:[],orimlig:[],social:[]};
 let checked={};
@@ -353,7 +342,7 @@ function setUnlimited(){localStorage.setItem('spark_unlimited','1')}
 function shuffle(a){const r=[...a];for(let i=r.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[r[i],r[j]]=[r[j],r[i]]}return r}
 function pick(pool,n){return shuffle(pool).slice(0,n)}
  
-function fmt(n){return n.toLocaleString('sv-SE')+' kr'}
+function fmt(n){return '$' + n.toLocaleString('en-US')}
  
 function genItems(){
   current={
@@ -376,11 +365,11 @@ function renderAll(){
       const big=item.kr>=1000000000;
       const d=document.createElement('div');
       d.className='item';d.dataset.key=k;d.dataset.kr=item.kr;
-      d.innerHTML=`<div class="checkbox"><svg class="cksvg" viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div><span class="idesc">${item.t}</span><span class="ikr${big?' big':''}">${item.kr===0?'🆓 Gratis seger':'+'+fmt(item.kr)}</span>`;
+      d.innerHTML=`<div class="checkbox"><svg class="cksvg" viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div><span class="idesc">${item.t}</span><span class="ikr${big?' big':''}">${item.kr===0?'Free Win':'+'+fmt(item.kr)}</span>`;
       d.addEventListener('click',()=>toggle(d,k));
       el.appendChild(d);
     });
-    document.getElementById(counts[cat]).textContent=current[cat].length+' poster';
+    document.getElementById(counts[cat]).textContent=current[cat].length+' items';
   });
   updateDisplay();
 }
@@ -407,32 +396,32 @@ function toggleAll(){
 function updateDisplay(){
   const el=document.getElementById('cnum');
   el.textContent=fmt(total);el.classList.add('pop');setTimeout(()=>el.classList.remove('pop'),200);
-  const notes=[[0,'Börja kryssa i dina prestationer ↓'],[1000,'Bra start. Räcker till en surdegslimpa.'],[100000,'Warren Buffett är lite avundsjuk.'],[1000000,'Du är tekniskt sett miljonär. På pappret.'],[1000000000,'Din privatekonom förstår ingenting.'],[Infinity,'🏆 Rikare än de flesta länder. Teoretiskt.']];
+  const notes=[[0,'Start checking off your passive wins ↓'],[10,'Good start. Enough to pay for hipster bread.'],[10000,'Warren Buffett is getting nervous.'],[1000000,'You are technically a millionaire. On paper.'],[1000000000,'Your financial advisor has left the chat.'],[Infinity,'🏆 Richer than several sovereign nations. Theoretically.']];
   const note=notes.filter(([n])=>total>=n).pop();
   document.getElementById('cnote').textContent=note[1];
   const pct=Math.min(100,(total/FIRE_TARGET)*100);
   document.getElementById('fill').style.width=pct+'%';
   const pv=document.getElementById('pval');pv.textContent=pct<0.001?'<0.001%':pct<1?pct.toFixed(3)+'%':pct.toFixed(1)+'%';
   const tot=Object.keys(checked).length;
-  document.getElementById('seltxt').textContent=nChecked+' av '+tot+' genomförda';
+  document.getElementById('seltxt').textContent=nChecked+' of '+tot+' completed';
   updateShare();
 }
  
 function getShareText(){
   const t=fmt(total);
   if(!total)return'';
-  if(total<10000)return`Ekonomisk update: Sparat ${t} idag via strategisk passivitet 📊\n\nFölj för fler spartips.\n\n#Ekonomi #FIRE #Frugalitet`;
-  if(total<1000000)return`PORTFÖLJUPDATE 📊\n\nTotala besparingar idag: ${t}\n\nStrategi: Låg på soffan. Åt ostbågar. ROI: oändlig.\n\n#Ekonomi #FIRE #Sparkalkylatorn`;
-  return`Ekonomisk update 🚨\n\nJag har precis sparat ${t} idag genom att bara ligga på soffan och äta ostbågar.\n\nEfter noggrann analys valde jag att INTE köpa ubåt, herrgård på Strandvägen eller Twitter.\n\nDM öppna för coaching.\n\n#Ekonomi #Investering #Latmask #FIRE`;
+  if(total<10000)return`Financial Update: Saved ${t} today via strategic passivity 📊\n\nFollow me for more wealth hacks.\n\n#Finance #FIRE #Frugal`;
+  if(total<1000000)return`PORTFOLIO UPDATE 📊\n\nTotal savings today: ${t}\n\nStrategy: Laid on the couch. Ate snacks. ROI: Infinite.\n\n#Wealth #FIRE #TheLazyMillionaire`;
+  return`Financial Update 🚨\n\nI just saved ${t} today by simply laying on the couch and doing absolutely nothing.\n\nAfter thorough analysis, I chose NOT to purchase a submarine, a mansion, or Twitter.\n\nDM open for wealth coaching.\n\n#Finance #Investing #LazyWealth #FIRE`;
 }
 function updateShare(){
   const p=document.getElementById('share-prev');const txt=getShareText();
-  if(!txt){p.innerHTML='<em>Kryssa i något för att generera din finansupdate…</em>';return}
+  if(!txt){p.innerHTML='<em>Check an item to generate your financial update…</em>';return}
   p.innerHTML=txt.replace(/\n/g,'<br>');
 }
-function copyTxt(){if(!total){showToast('Kryssa i något först!');return}navigator.clipboard.writeText(getShareText()).then(()=>showToast('✓ Kopierat!'))}
-function shareLI(){if(!total){showToast('Kryssa i något först!');return}window.open('https://www.linkedin.com/sharing/share-offsite/?url=sparkalkylatorn.se','_blank')}
-function shareXt(){if(!total){showToast('Kryssa i något först!');return}const t=encodeURIComponent(getShareText().substring(0,260));window.open('https://x.com/intent/tweet?text='+t,'_blank')}
+function copyTxt(){if(!total){showToast('Check an item first!');return}navigator.clipboard.writeText(getShareText()).then(()=>showToast('✓ Copied!'))}
+function shareLI(){if(!total){showToast('Check an item first!');return}window.open('https://www.linkedin.com/sharing/share-offsite/?url=lazymillionaire.com','_blank')}
+function shareXt(){if(!total){showToast('Check an item first!');return}const t=encodeURIComponent(getShareText().substring(0,260));window.open('https://x.com/intent/tweet?text='+t,'_blank')}
 function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500)}
  
 function updateReloadUI(){
@@ -444,12 +433,12 @@ function updateReloadUI(){
   const btn=document.getElementById('btn-reload');
   if(unlimited){
     dotsEl.innerHTML='<span style="font-size:18px;line-height:1">♾️</span>';
-    txt.textContent='Obegränsade omladdningar';
+    txt.textContent='Unlimited reloads activated';
     btn.disabled=false;
   } else {
     dotsEl.innerHTML='';
     for(let i=0;i<MAX_FREE;i++){const d=document.createElement('div');d.className='dot '+(i<used?'used':'avail');dotsEl.appendChild(d)}
-    txt.textContent=rem<=0?'Slut på gratisomgångar för idag':rem+' omladdning'+(rem===1?'':'ar')+' kvar idag';
+    txt.textContent=rem<=0?'Out of free rounds for today':rem+' reload'+(rem===1?'':'s')+' left today';
     btn.disabled=rem<=0;
   }
 }
@@ -462,19 +451,23 @@ function doReload(){
   if(!isUnlimited())incReloads();
   genItems();renderAll();updateReloadUI();
   window.scrollTo({top:0,behavior:'smooth'});
-  showToast('🔀 Ny omgång!');
+  showToast('🔀 New setup loaded!');
 }
  
 function closePay(){document.getElementById('pay-modal').classList.remove('open')}
-function handlePay(){
-  // 👇 Replace with your actual Stripe Payment Link
-  window.open('https://buy.stripe.com/REPLACE_WITH_YOUR_STRIPE_LINK','_blank');
-  // After payment verified via webhook, call setUnlimited() and updateReloadUI()
+function handlePayClick(){
+  // Simulera betalning - sätter igång unlimited direkt när de klickar
+  setUnlimited();
+  setTimeout(()=>{
+    closePay();
+    updateReloadUI();
+    showToast('🚀 Unlimited Unlocked! Enjoy!');
+  }, 1500);
 }
  
 function openCert(){
-  document.getElementById('c-date').textContent=new Date().toLocaleDateString('sv-SE');
-  if(total>0)document.getElementById('c-body').innerHTML=`Genom synnerligen imponerande passivitet och en förbluffande förmåga att <em>inte</em> spendera pengar har sparat totalt <strong>${fmt(total)}</strong> under en och samma dag.<br><br><strong>Certifierad Expert i Extrem Frugalitet (CEF)</strong>`;
+  document.getElementById('c-date').textContent=new Date().toLocaleDateString('en-US');
+  if(total>0)document.getElementById('c-body').innerHTML=`Through highly impressive passivity and an astonishing ability to <em>not</em> spend money, has saved a total of <strong>${fmt(total)}</strong> during a single calendar day.<br><br><strong>Certified Expert in Extreme Frugality (CEF)</strong>`;
   document.getElementById('cert-modal').classList.add('open');
 }
 function closeCert(){document.getElementById('cert-modal').classList.remove('open')}
