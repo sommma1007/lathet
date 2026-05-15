@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Lazy Millionaire™ — New round every day</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="icon" type="money.jpg" href="money.jpg">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -217,10 +218,10 @@ footer{text-align:center;padding-top:32px;border-top:1px solid var(--border);fon
 </div>
  
 <div class="donate-box">
-  <h2 class="bx-title">Unlock Unlimited Potential 🚀</h2>
-  <p class="bx-desc">Don't save $3 today — spend them once to unlock unlimited daily rounds forever. An ironic yet smart investment.</p>
-  <a href="https://buymeacoffee.com" class="sbtn sbtn-org" target="_blank" rel="noopener" onclick="handlePayClick()">☕ Don't save $3 — Get Unlimited</a>
-  <span class="bx-note">*Costs exactly $3. One-time fee for life.</span>
+  <h2 class="bx-title">Want to ruin your savings model? ☕</h2>
+  <p class="bx-desc">Click to <em>not</em> save $3 and give them to the developer instead. An ironic purchase — morally sound.</p>
+  <a href="https://buymeacoffee.com" class="sbtn sbtn-org" target="_blank" rel="noopener">☕ Don't Save $3</a>
+  <span class="bx-note">*Deducts $3 from your mental math. You have been warned.</span>
 </div>
  
 <footer>
@@ -235,19 +236,19 @@ footer{text-align:center;padding-top:32px;border-top:1px solid var(--border);fon
   <div class="modal">
     <span class="modal-emoji">🔒</span>
     <h2 class="modal-title">Out of Free Rounds</h2>
-    <p class="modal-sub">You've reached your 3 daily free reloads. Ready to go pro for a tiny one-time fee?</p>
+    <p class="modal-sub">You've used your 3 free daily reloads. Want to keep rolling new absurd financial options?</p>
     <div class="price-tag">
       <div class="price-big">$3</div>
-      <div class="price-note">Unlimited Rounds — Forever</div>
+      <div class="price-note">Unlimited Reloads — Forever</div>
     </div>
     <ul class="feat">
       <li>Unlimited reloads, forever</li>
       <li>New ridiculous options added constantly</li>
       <li>Supports a lazy developer's retirement fund</li>
-      <li>Exactly $3 — No more, no less</li>
+      <li>An ironic yet actual investment</li>
     </ul>
-    <a href="https://buymeacoffee.com" class="btn-pay" target="_blank" rel="noopener" onclick="handlePayClick()">🚀 Get Unlimited — $3 Flat Fee</a>
-    <button class="modal-close" onclick="closePay()">No thanks, I'll wait until tomorrow</button>
+    <a href="https://buymeacoffee.com" class="btn-pay" target="_blank" rel="noopener" onclick="handlePayClick()">🚀 Unlock — $3 One-time</a>
+    <button class="modal-close" onclick="closePay()">No thanks, 3 free rounds is plenty</button>
   </div>
 </div>
  
@@ -456,13 +457,13 @@ function doReload(){
  
 function closePay(){document.getElementById('pay-modal').classList.remove('open')}
 function handlePayClick(){
-  // Simulera betalning - sätter igång unlimited direkt när de klickar
+  // Activated directly upon clicking Buy Me a Coffee button
   setUnlimited();
   setTimeout(()=>{
     closePay();
     updateReloadUI();
     showToast('🚀 Unlimited Unlocked! Enjoy!');
-  }, 1500);
+  }, 2000);
 }
  
 function openCert(){
